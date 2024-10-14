@@ -15,7 +15,7 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         """Метод для обработки входящих GET-запросов"""
 
-        path = "../html/contact.html"
+        path = "../web_shop/catalog/templates/catalog/contact.html"
 
         self.send_response(200)  # Отправка кода ответа
         self.send_header("Content-type", "text/html")  # Отправка типа данных, который будет передаваться
