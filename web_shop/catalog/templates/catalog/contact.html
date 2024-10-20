@@ -112,12 +112,21 @@
                     </div>
                     <div class="col-6">
                         <h5 class="text-start">Наши контакты</h5>
-                        <p>
-                            Главный офис - г.Москва, пр-т Вернадского, д.23
-                        </p>
-                        <p>
-                            Телефон для связи - +7 777 777 77 77
-                        </p>
+                        {% for contact in contacts %}
+                            <p>
+                            Главный офис - {{ contact.address }}
+                            </p>
+                        {% endfor %}
+                        {% for contact in contacts %}
+                            <p>
+                                Телефон для связи - {{ contact.phone_number }}
+                            </p>
+                        {% endfor %}
+                        {% for contact in contacts %}
+                            <p>
+                                Email - {{ contact.email }}
+                            </p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

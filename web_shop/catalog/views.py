@@ -1,9 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from .models import Contact, Product
+
 
 # Create your views here.
 def home_views(request):
+
+    latest_products = Product.objects.order_by("-created_at")[:5]
+    for product in latest_products:
+        print(product.name)
+
     return render(request, "catalog/home.html")
 
 
@@ -23,4 +30,5 @@ def contact_views(request):
         print(email)
         # Здесь мы просто возвращаем простой ответ
         return HttpResponse(f"Спасибо, {name}! Ваше email {email} получен.")
-    return render(request, "catalog/contact.html")
+    contacts = Contact.objects.all()
+    return render(request, "catalog/contact.html", {"contacts": contacts})
