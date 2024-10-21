@@ -30,5 +30,10 @@ def contact_views(request):
         print(email)
         # Здесь мы просто возвращаем простой ответ
         return HttpResponse(f"Спасибо, {name}! Ваше email {email} получен.")
-    contacts = Contact.objects.all()
-    return render(request, "catalog/contact.html", {"contacts": contacts})
+    contacts = Contact.objects.get(id=1)
+    contact = {
+        "phone_number": contacts.phone_number,
+        "address": contacts.address,
+        "email": contacts.email
+    }
+    return render(request, "catalog/contact.html", contact)
