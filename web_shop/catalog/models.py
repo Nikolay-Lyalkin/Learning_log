@@ -7,7 +7,12 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование категории")
     description = models.TextField(verbose_name="Описание")
 
+    def __str__(self):
+        return f"{self.name}"
+
     class Meta:
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
         db_table = "categories"
 
 
@@ -22,7 +27,12 @@ class Product(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.name} - {self.price} p."
+
     class Meta:
+        verbose_name = "продукт"
+        verbose_name_plural = "продукты"
         ordering = ["category"]
         db_table = "products"
 
@@ -32,5 +42,10 @@ class Contact(models.Model):
     email = models.EmailField()
     address = models.TextField()
 
+    def __str__(self):
+        return f"Телефон - {self.phone_number}"
+
     class Meta:
+        verbose_name = "контакт"
+        verbose_name_plural = "контакты"
         db_table = "contacts"
