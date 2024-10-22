@@ -1,0 +1,44 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<h1 class="text-center margin-top-main mb-5">Контакты</h1>
+<div class="row">
+    <div class="col-6 d-flex justify-content-evenly">
+        <form class="form-control border" style="width: 450px" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Имя</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Почта</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="email" class="form-control" id="floatingInput" name="email">
+                </div>
+            </div>
+            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                          style="height: 100px">
+                                </textarea>
+                <label for="floatingTextarea2">Сообщение</label>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+        </form>
+    </div>
+    <div class="col-6">
+        <h5 class="text-start">Наши контакты</h5>
+        <p>
+            Главный офис - {{ address }}
+        </p>
+        <p>
+            Телефон для связи - {{ phone_number }}
+        </p>
+        <p>
+            Email - {{ email }}
+        </p>
+    </div>
+</div>
+{% endblock %}
