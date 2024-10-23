@@ -1,9 +1,13 @@
 <!--form_add_product-->
-<div class="container" style="margin-left:30px">
+{% extends 'catalog/base.html' %}
+
+{% block title %}Добавить товар{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top:20px">
     <form class="form-control border" style="width: 600px" method="post">
         <h5 class="text-center border-bottom pb-2">Добавить товар</h5>
         {% csrf_token %}
-        {{ form.as_p }}
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Наименование</label>
             <input type="text" class="form-control" id="formGroupExampleInput" name="name">
@@ -31,3 +35,4 @@
         <button type="submit" class="btn btn-primary mt-2">Отправить</button>
     </form>
 </div>
+{% endblock %}

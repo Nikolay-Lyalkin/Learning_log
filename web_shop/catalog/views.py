@@ -3,13 +3,16 @@ from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy
 
 from .models import Contact, Product, Category
+
 
 class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product.html"
     context_object_name = "product"
+    success_url = reverse_lazy('catalog:home_views')
 
 
 class ProductCreateView(CreateView):
@@ -22,6 +25,10 @@ class ProductCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class ProductListView(ListView):
