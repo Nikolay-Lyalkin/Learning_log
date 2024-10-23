@@ -3,6 +3,7 @@
     <form class="form-control border" style="width: 600px" method="post">
         <h5 class="text-center border-bottom pb-2">Добавить товар</h5>
         {% csrf_token %}
+        {{ form.as_p }}
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Наименование</label>
             <input type="text" class="form-control" id="formGroupExampleInput" name="name">
