@@ -4,34 +4,36 @@
 {% block title %}Добавить товар{% endblock %}
 
 {% block content %}
+
 <div class="container" style="margin-top:20px">
-    <form class="form-control border" style="width: 600px" method="post">
+    <form class="form-control border" style="width: 600px" method="post" enctype="multipart/form-data">
         <h5 class="text-center border-bottom pb-2">Добавить товар</h5>
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Наименование</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" name="name">
-        </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label">Описание</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" name="description">
-        </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label">Изображение</label>
-            <input type="file" class="form-control" id="inputGroupFile02" name="image">
-        </div>
-        <div class="form-floating">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="category">
-                <option selected>Категории</option>
-                {% for category in categories %}
-                <option> {{ category }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput3" class="form-label">Цена</label>
-            <input type="text" class="form-control" id="formGroupExampleInput3" name="price">
-        </div>
+        {{ form.as_p }}
+<!--        <div class="mb-3">-->
+<!--            <label for="formGroupExampleInput" class="form-label">Наименование</label>-->
+<!--            <input type="text" class="form-control" id="formGroupExampleInput" name="name">-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label for="formGroupExampleInput2" class="form-label">Описание</label>-->
+<!--            <input type="text" class="form-control" id="formGroupExampleInput2" name="description">-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label for="formGroupExampleInput2" class="form-label">Изображение</label>-->
+<!--            <input type="file" class="form-control" id="inputGroupFile02" name="image">-->
+<!--        </div>-->
+<!--        <div class="form-floating">-->
+<!--            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="category">-->
+<!--                <option selected>Категории</option>-->
+<!--                {% for category in categories %}-->
+<!--                <option>{{ category }}</option>-->
+<!--                {% endfor %}-->
+<!--            </select>-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label for="formGroupExampleInput3" class="form-label">Цена</label>-->
+<!--            <input type="text" class="form-control" id="formGroupExampleInput3" name="price">-->
+<!--        </div>-->
         <button type="submit" class="btn btn-primary mt-2">Отправить</button>
     </form>
 </div>

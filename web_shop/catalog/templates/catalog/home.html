@@ -4,6 +4,7 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
+
 <h1 class="text-center margin-top-main">Выбирай и покупай</h1>
 <p class="text-center fw-light">Вы находитесь на сайте, предназначенном для продажи товаров</p>
 <div class="row">
@@ -14,11 +15,14 @@
             <div class="card-body">
                 <h5 class="card-title">{{ product.price }}</h5>
                 <p class="card-text"> {{ product.description|truncatechars:100 }}</p>
-                <a href="{% url 'catalog:product_views' product.pk %}" class="btn btn-outline-primary">Посмотреть</a>
+                <a href="{% url 'catalog:product_views' product.pk %}"
+                   class="btn btn-outline-primary">Посмотреть</a>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
-{% include 'catalog/paginator.html' %}
+<div>
+    {% include 'catalog/paginator.html' %}
+</div>
 {% endblock %}

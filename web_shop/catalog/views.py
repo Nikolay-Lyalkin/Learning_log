@@ -19,16 +19,14 @@ class ProductCreateView(CreateView):
     model = Product
     fields = ["name", "description", "image", "category", "price"]
     template_name = "catalog/form_add_product.html"
-    context_object_name = "product"
+    success_url = reverse_lazy("catalog:home_views")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        return context
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ["name", "description", "image", "category", "price"]
+    template_name = "catalog/form_update_product.html"
+    success_url = reverse_lazy("catalog:home_views")
 
 
 class ProductListView(ListView):
