@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Товар{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-5 mb-5 d-flex justify-content-evenly">
+        <div class="card" style="width: 350px; margin-top:20px">
+            <img src="{{product.image.url}}" class="card-img-top" alt="Изображение">
+            <div class="card-body">
+                <p class="card-text">{{ product.description }}</p>
+                <div class="row">
+<!--                    <a class="col-9" href="{% url 'catalog:home_views' %}">-->
+<!--                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">-->
+<!--                            <button type="button" class="btn btn-outline-secondary">отмена</button>-->
+<!--                            <button type="button" class="btn btn-outline-secondary">редактировать</button>-->
+<!--                        </div>-->
+<!--                    </a>-->
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <a href="{% url 'catalog:home_views' %}" class="btn btn-outline-secondary">Назад</a>
+                        <a href="{% url 'catalog:update_product_views' product.pk %}" class="btn btn-outline-secondary">Редактировать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="card-body">
+            <h4 class="card-title text-start" style="margin-top:150px">{{ product.name }}</h4>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="#" class="btn btn-primary">Купить {{product.price}}p.</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
