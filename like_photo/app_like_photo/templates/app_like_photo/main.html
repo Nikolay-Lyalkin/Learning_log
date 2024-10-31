@@ -1,0 +1,29 @@
+<!-- main.html -->
+{% extends 'app_like_photo/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center margin-top-main">История публикаций</h1>
+
+{% for post in posts %}
+<div class="mb-5 d-flex justify-content-evenly">
+    <div class="card" style="width: 350px; margin-top:20px">
+        <h4 class="text-center">{{post.header}}</h4>
+        <img src="{{post.image.url}}" class="card-img-top" alt="Изображение">
+        <div class="card-body">
+            <div class="row">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a href="{% url 'app_like_photo:post_views' post.pk %}"
+                       class="btn btn-outline-secondary">Посмотреть</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+
+{% endblock %}
