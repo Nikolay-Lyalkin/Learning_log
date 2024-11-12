@@ -9,6 +9,7 @@
     <form class="form-control border" style="width: 600px" method="post" enctype="multipart/form-data">
         <h5 class="text-center border-bottom pb-2">Редактировать товар</h5>
         {% csrf_token %}
+        {{ form.non_field_errors }}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary mt-2">Отправить</button>
     </form>

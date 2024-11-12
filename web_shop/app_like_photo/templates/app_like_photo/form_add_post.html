@@ -1,13 +1,17 @@
 <!--form_add_product-->
-{% extends 'catalog/base.html' %}
+{% extends 'app_like_photo/base.html' %}
 
-{% block title %}Добавить товар{% endblock %}
+{% block title %}Добавить пост{% endblock %}
 
 {% block content %}
 
 <div class="container" style="margin-top:20px">
     <form class="form-control border" style="width: 600px" method="post" enctype="multipart/form-data">
-        <h5 class="text-center border-bottom pb-2">Добавить товар</h5>
+        {% if post %}
+        <h5 class="text-center border-bottom pb-2">Изменить пост</h5>
+        {% else %}
+        <h5 class="text-center border-bottom pb-2">Добавить пост</h5>
+        {% endif %}
         {% csrf_token %}
         {{ form.non_field_errors }}
         {{ form.as_p }}

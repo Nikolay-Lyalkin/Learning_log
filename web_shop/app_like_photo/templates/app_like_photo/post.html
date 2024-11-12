@@ -1,0 +1,31 @@
+<!-- main.html -->
+{% extends 'app_like_photo/base.html' %}
+
+{% block title %}Публикация{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center margin-top-main"></h1>
+<div class="row">
+    <div class="mb-5 d-flex justify-content-evenly">
+        <div class="card" style="width: 450px; margin-top:20px">
+            <h4 class="text-center">{{post.header}}</h4>
+            <img src="{{post.image.url}}" class="card-img-top" alt="Изображение">
+            <div class="card-body">
+                <p class="card-text text-center">{{ post.content }}</p>
+                <div class="row">
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <a href="{% url 'app_like_photo:main_views' %}" class="btn btn-outline-secondary">Назад</a>
+                        <a href="{% url 'app_like_photo:update_post_views' post.pk %}"
+                           class="btn btn-outline-secondary">Изменить</a>
+                        <a href="{% url 'app_like_photo:delete_post_views' post.pk %}" class="btn btn-outline-secondary">Удалить</a>
+                    </div>
+                    <small>Опубликовано: {{ created_at_post }}</small>
+                    <small>Просмотров: {{ post.views_count }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
