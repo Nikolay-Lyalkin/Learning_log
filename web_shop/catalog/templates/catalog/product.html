@@ -13,6 +13,7 @@
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                         <a href="{% url 'catalog:home_views' %}" class="btn btn-outline-secondary">Назад</a>
                         <a href="{% url 'catalog:update_product_views' product.pk %}" class="btn btn-outline-secondary">Редактировать</a>
+                        <a href="{% url 'catalog:delete_product_views' product.pk %}" class="btn btn-outline-secondary">Удалить</a>
                     </div>
                 </div>
             </div>
