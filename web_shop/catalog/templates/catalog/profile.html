@@ -1,0 +1,17 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div>
+        <img src="{{ user.avatar.url }}"
+             class="rounded mt-2" alt="Изображение" width="200" height="200">
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Номер телефона: {{ user.phone_number }}</p>
+        <a href="openModal" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Редактировать</a>
+        {% include 'catalog/popup_question.html' %}
+    </div>
+</div>
+{% endblock %}

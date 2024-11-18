@@ -1,22 +1,24 @@
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .forms import FormForCreate
+from .forms import FormForCreate, FormUpdateProfile
 from .models import Category, Contact, Product
+from auth_users.models import CustomUser
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product.html"
     context_object_name = "product"
     success_url = reverse_lazy("catalog:home_views")
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = FormForCreate
     template_name = "catalog/form_add_product.html"
@@ -28,7 +30,7 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = FormForCreate
     template_name = "catalog/form_update_product.html"
@@ -37,20 +39,32 @@ class ProductUpdateView(UpdateView):
         return reverse_lazy("catalog:product_views", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/delete_product.html"
     success_url = reverse_lazy("catalog:home_views")
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
     paginate_by = 3
 
 
-class ContactTemplateView(TemplateView):
+class CatalogProductListView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = "catalog/catalog.html"
+    context_object_name = "products"
+
+
+class UnauthorizedUserListView(ListView):
+    model = Product
+    template_name = "catalog/unauthorized_user.html"
+    context_object_name = "products"
+
+
+class ContactTemplateView(LoginRequiredMixin, TemplateView):
     model = Contact
     template_name = "catalog/contact.html"
     context_object_name = "contacts"
@@ -61,60 +75,28 @@ class ContactTemplateView(TemplateView):
         return context
 
 
-# Create your views here.
-# def home_views(request):
-#     if request.method == "POST":
-#         name = request.POST.get("name")
-#         description = request.POST.get("description")
-#         image = request.POST.get("image")
-#         categories = Category.objects.all()
-#         category = [category for category in categories if request.POST.get("category") == category.name]
-#         price = request.POST.get("price")
-#
-#         new_product = Product.objects.create(
-#             name=name, description=description, image=image, category=category[0], price=price
-#         )
-#
-#         # Здесь мы просто возвращаем простой ответ
-#         return HttpResponse(f"Вы добавили товар - {name}!")
-#
-#     categories = Category.objects.all()
-#     products = Product.objects.all()
-#
-#     paginator = Paginator(products, 3)
-#     page_number = request.GET.get("page", 1)
-#     page_obj = paginator.get_page(page_number)
-#
-#     context = {
-#         "products": products,
-#         "categories": categories,
-#         "page_obj": page_obj,
-#     }
-#
-#     return render(request, "catalog/home.html", context)
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    template_name = "catalog/category.html"
+    context_object_name = "category"
 
 
-def category_views(request):
-    return render(request, "catalog/category.html")
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = CustomUser
+    template_name = "catalog/profile.html"
+    context_object_name = "profile"
 
 
-def catalog_views(request):
-    return render(request, "catalog/catalog.html")
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = FormUpdateProfile
+    template_name = "catalog/form_update_profile.html"
+
+    def get_success_url(self):
+        return reverse_lazy("catalog:profile_views", args=[self.kwargs.get("pk")])
 
 
-# def contact_views(request):
-#     if request.method == "POST":
-#         name = request.POST.get("name")
-#         email = request.POST.get("email")
-#         print(name)
-#         print(email)
-#         # Здесь мы просто возвращаем простой ответ
-#         return HttpResponse(f"Спасибо, {name}! Ваше email {email} получен.")
-#     contacts = Contact.objects.get(id=1)
-#     contact = {"phone_number": contacts.phone_number, "address": contacts.address, "email": contacts.email}
-#     return render(request, "catalog/contact.html", contact)
+class ProfilePopupTemplateView(TemplateView):
+    model = CustomUser
+    template_name = "catalog/popup_question.html"
 
-# def product_views(request, product_id):
-#     product = Product.objects.get(id=product_id)
-#     context = {"product": product}
-#     return render(request, "catalog/product.html", context)

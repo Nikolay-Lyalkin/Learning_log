@@ -5,81 +5,21 @@
 {% block content %}
 <h1 class="text-center margin-top-main mb-5">Каталог</h1>
 <div class="row">
-    <div class="col-6 mb-5 d-flex justify-content-evenly">
-        <div class="card" style="width: 400px;">
-            <img src="https://avatars.mds.yandex.net/get-entity_search/2487574/791430766/S600xU_2x" class="card-img-top"
+    {% for product in products %}
+    <div class="col-4 mb-5 d-flex justify-content-evenly">
+        <div class="card" style="width: 300px;">
+            <img src="{{product.image.url}}" class="card-img-top"
                  alt="...">
             <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <div class="row">
-                    <a class="col-9">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
-                        </div>
-                    </a>
-                    <small class="col-3">11 mins</small>
+                <p class="card-text">{{ product.name }}.</p>
+                <div class="btn-group btn-group-sm position-absolute bottom-0 text-center" role="group"
+                     aria-label="Small button group">
+                    <a href="{% url 'catalog:product_views' product.pk %}"
+                       class="btn btn-outline-primary"> КУПИТЬ {{ product.price }} р.</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-6 mb-5 d-flex justify-content-evenly">
-        <div class="card" style="width: 400px;">
-            <img src="https://avatars.mds.yandex.net/get-entity_search/10767883/924533034/S600xU_2x"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <div class="row">
-                    <a class="col-9">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
-                        </div>
-                    </a>
-                    <small class="col-3">11 mins</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 mb-5 d-flex justify-content-evenly">
-        <div class="card" style="width: 400px;">
-            <img src="https://avatars.mds.yandex.net/get-entity_search/10767883/924533034/S600xU_2x"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <div class="row">
-                    <a class="col-9">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
-                        </div>
-                    </a>
-                    <small class="col-3">11 mins</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 mb-5 d-flex justify-content-evenly">
-        <div class="card" style="width: 400px;">
-            <img src="https://avatars.mds.yandex.net/get-entity_search/10767883/924533034/S600xU_2x"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <div class="row">
-                    <a class="col-9">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
-                        </div>
-                    </a>
-                    <small class="col-3">11 mins</small>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}
