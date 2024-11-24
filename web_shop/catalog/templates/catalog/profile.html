@@ -5,8 +5,13 @@
 {% block content %}
 <div class="row">
     <div>
+        {% if user.avatar %}
         <img src="{{ user.avatar.url }}"
              class="rounded mt-2" alt="Изображение" width="200" height="200">
+        {% else %}
+        <img src="#"
+             class="rounded mt-2" alt="Ваша фотография" width="200" height="200">
+        {% endif %}
         <p>Username: {{ user.username }}</p>
         <p>Email: {{ user.email }}</p>
         <p>Номер телефона: {{ user.phone_number }}</p>

@@ -4,6 +4,7 @@ from django import forms
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
+    username = forms.CharField(label="Никнейм", max_length=20, widget=forms.TextInput(attrs={"class": "form-control", "style": "width: 400px"}))
     email = forms.EmailField(label="Электронная почта", widget=forms.EmailInput(attrs={"class": "form-control", "style": "width: 400px"}))
     password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput(attrs={"class": "form-control", "style": "width: 400px"}))
     password2 = forms.CharField(label="Повторите пароль", widget=forms.PasswordInput(attrs={"class": "form-control", "style": "width: 400px"}))
@@ -11,7 +12,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ("email", "password1", "password2")
+        fields = ("username", "email", "password1", "password2")
 
 
 class CustomLoginForm(AuthenticationForm):

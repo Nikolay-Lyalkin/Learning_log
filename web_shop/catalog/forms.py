@@ -42,6 +42,7 @@ class FormForCreate(forms.ModelForm):
     price = forms.DecimalField(
         label="Цена", widget=forms.TextInput(attrs={"class": "form-control", "style": "width: 200px"})
     )
+    is_active = forms.BooleanField(label="Активность", required=False)
 
     def clean_price(self):
         """Валидация цены товара"""
@@ -59,7 +60,7 @@ class FormForCreate(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ["name", "description", "image", "category", "price"]
+        fields = ["name", "description", "image", "category", "price", "is_active"]
 
 
 class FormUpdateProfile(forms.ModelForm):

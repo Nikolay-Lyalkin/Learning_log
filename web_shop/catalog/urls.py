@@ -17,5 +17,6 @@ urlpatterns = [
     path("unauthorized_user_views/", views.UnauthorizedUserListView.as_view(), name="unauthorized_user_views"),
     path("profile_views/<int:pk>/", views.ProfileDetailView.as_view(), name="profile_views"),
     path("update_profile_views/<int:pk>/", views.ProfileUpdateView.as_view(), name="update_profile_views"),
-    path("popup_question_views/<int:pk>/", views.ProfilePopupTemplateView.as_view(), name="popup_question_views")
+    path("popup_question_views/<int:pk>/", views.ProfilePopupTemplateView.as_view(), name="popup_question_views"),
+    path("unpublished_product_views/<int:pk>/", views.UnpublishedProductView.as_view(), name="unpublished_product_views"),
 ]

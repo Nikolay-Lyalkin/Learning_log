@@ -1,5 +1,8 @@
 from django.db import models
 
+from auth_users.models import CustomUser
+
+
 # Create your models here.
 
 
@@ -26,6 +29,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
+    is_active = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f"{self.name}"
@@ -34,6 +39,9 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
         db_table = "products"
+        permissions = [
+            ("can_unpublished_product", "Может отменять публикацию продукта"),
+        ]
 
 
 class Contact(models.Model):

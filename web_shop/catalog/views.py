@@ -1,9 +1,9 @@
-from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseForbidden
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import FormForCreate, FormUpdateProfile
@@ -16,6 +16,18 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     template_name = "catalog/product.html"
     context_object_name = "product"
     success_url = reverse_lazy("catalog:home_views")
+
+
+class UnpublishedProductView(LoginRequiredMixin, PermissionRequiredMixin, View):
+
+    permission_required = 'catalog.can_unpublished_product'
+    def post(self, request, pk):
+        product = get_object_or_404(Product, id=pk)
+
+        product.is_active = False
+        product.save()
+
+        return redirect("catalog:home_views")
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -39,10 +51,11 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("catalog:product_views", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/delete_product.html"
     success_url = reverse_lazy("catalog:home_views")
+    permission_required = 'catalog.delete_product'
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -51,11 +64,20 @@ class ProductListView(LoginRequiredMixin, ListView):
     context_object_name = "products"
     paginate_by = 3
 
+    def get_queryset(self):
+        # Получаем только активные объекты
+        return Product.objects.filter(is_active=True)
+
+
 
 class CatalogProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = "catalog/catalog.html"
     context_object_name = "products"
+
+    def get_queryset(self):
+        # Получаем только активные объекты
+        return Product.objects.filter(is_active=True)
 
 
 class UnauthorizedUserListView(ListView):
@@ -99,4 +121,3 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 class ProfilePopupTemplateView(TemplateView):
     model = CustomUser
     template_name = "catalog/popup_question.html"
-
