@@ -1,9 +1,9 @@
+from auth_users.models import CustomUser
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 
 from .models import Category, Product
-from auth_users.models import CustomUser
 
 
 def validate_words(value):
@@ -68,10 +68,10 @@ class FormUpdateProfile(forms.ModelForm):
         label="Наименование",
         widget=forms.TextInput(attrs={"class": "form-control", "style": "width: 400px"}),
     )
-    email = forms.EmailField(label="Электронная почта", widget=forms.EmailInput(attrs={"class": "form-control", "style": "width: 400px"}))
-    avatar = forms.ImageField(
-        label="Изображение",
-        widget=forms.FileInput(attrs={"class": "form-control"}))
+    email = forms.EmailField(
+        label="Электронная почта", widget=forms.EmailInput(attrs={"class": "form-control", "style": "width: 400px"})
+    )
+    avatar = forms.ImageField(label="Изображение", widget=forms.FileInput(attrs={"class": "form-control"}))
 
     class Meta:
         model = CustomUser

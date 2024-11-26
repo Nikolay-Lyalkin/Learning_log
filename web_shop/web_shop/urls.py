@@ -25,7 +25,6 @@ urlpatterns = [
     path("", include("catalog.urls", namespace="catalog")),
     path("", include("app_like_photo.urls", namespace="app_like_photo")),
     path("", include("auth_users.urls", namespace="auth_users")),
-
 ]
 
 if settings.DEBUG:

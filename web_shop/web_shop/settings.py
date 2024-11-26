@@ -140,9 +140,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-
 # Данные для взаимодействия с почтой
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
@@ -151,11 +150,13 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
 # EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL")
 
-AUTH_USER_MODEL = 'auth_users.CustomUser'
+AUTH_USER_MODEL = "auth_users.CustomUser"
 
 # Определяет куда будет направлен пользователь после входа в аккаунт
 LOGIN_REDIRECT_URL = "catalog:home_views"
 
 # Определяет куда будет направлен неавторизованный пользователь
-LOGIN_URL = 'catalog:unauthorized_user_views'
+LOGIN_URL = "catalog:unauthorized_user_views"
 
+# Кастомный обработчик ошибок 403
+HANDLER403 = "catalog.views.custom_permission_denied"

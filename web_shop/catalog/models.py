@@ -1,7 +1,5 @@
-from django.db import models
-
 from auth_users.models import CustomUser
-
+from django.db import models
 
 # Create your models here.
 
@@ -30,7 +28,14 @@ class Product(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     is_active = models.BooleanField(default=False)
-
+    owner = models.ForeignKey(
+        CustomUser,
+        on_delete=models.DO_NOTHING,
+        default=9,
+        related_name="products",
+        max_length=100,
+        verbose_name="Пользователь",
+    )
 
     def __str__(self):
         return f"{self.name}"
