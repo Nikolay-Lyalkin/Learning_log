@@ -31,9 +31,7 @@ class Product(models.Model):
     owner = models.ForeignKey(
         CustomUser,
         on_delete=models.DO_NOTHING,
-        default=9,
         related_name="products",
-        max_length=100,
         verbose_name="Пользователь",
     )
 
