@@ -1,0 +1,25 @@
+<!-- home.html -->
+{% extends 'catalog/base.html' %}
+
+{% block title %} {{ category.name }} {% endblock %}
+
+{% block content %}
+
+<h1 class="text-center margin-top-main">{{ category.name }}</h1>
+<div class="row">
+    {% for product in products %}
+    <div class="col-5 mb-5 d-flex justify-content-evenly">
+        <div class="card" style="width: 350px; margin-top:20px">
+            <img src="{{product.image.url}}" class="card-img-top" alt="Изображение">
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="card-body">
+            <h4 class="card-title text-start" style="margin-top:150px">{{ product.name }}</h4>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="#" class="btn btn-primary">Купить {{product.price}}p.</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
