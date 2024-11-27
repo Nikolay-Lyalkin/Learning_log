@@ -1,18 +1,23 @@
 from auth_users.models import CustomUser
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import FormForCreate, FormUpdateProfile
 from .models import Category, Contact, Product
+from .services import CategoryService
 
 
+@method_decorator(cache_page(60 * 15), name="dispatch")
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product.html"
@@ -84,7 +89,11 @@ class ProductListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Получаем только активные объекты
-        return Product.objects.filter(is_active=True)
+        queryset = cache.get("product_in_category")
+        if not queryset:
+            queryset = Product.objects.filter(is_active=True)
+            cache.set("product_in_category", queryset, 60 * 15)  # Кешируем данные на 15 минут
+        return queryset
 
 
 class CatalogProductListView(LoginRequiredMixin, ListView):
@@ -117,7 +126,20 @@ class ContactTemplateView(LoginRequiredMixin, TemplateView):
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = "catalog/category.html"
+    context_object_name = "categories"
+
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    model = Category
+    template_name = "catalog/detail_category.html"
     context_object_name = "category"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.object.id
+        products = CategoryService.get_product_in_category(category_id)
+        context["products"] = products
+        return context
 
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
